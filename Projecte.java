@@ -63,44 +63,91 @@ public class Projecte {
 		}
 	}
 	public static void joc() {
+		Scanner teclado = new Scanner(System.in);
+		
 		// Variables Inicials
+		char[][] matrizTablero =     {{'-','○','-','○','-','○','-','○'},
+				{'○','-','○','-','○','-','○','-'},
+				{'-','○','-','○','-','○','-','○'},
+				{'-','-','-','-','-','-','-','-'},
+				{'-','-','-','-','-','-','-','-'},
+				{'•','-','•','-','•','-','•','-'},
+				{'-','•','-','•','-','•','-','•'},
+				{'•','-','•','-','•','-','•','-'}};
 		
-		
-		// Comença Torn Negres
-		
-		
-				// Imprimim Taula
+	while (true) {
+			// Comença Torn Negres
+
+
+			// Imprimim Taula
+			mostrarTaulell(matrizTablero);
+
+			// Demanem Posició que es vol moure (Fila + Columna)
+			System.out.println("Torn de les NEGRES");
 			
+			// Fila
+			System.out.println("Fila on tens la fitxa:");
+			int filaPrincipi = teclado.nextInt();
 			
-				// Demanem Posició que es vol moure (Fila + Columna)
+			// Columna
+			System.out.println("Columna on tens la fitxa:");
+			int columnaPrincipi = teclado.nextInt();
 			
-			
-				// Comprobem que es del seu color
+			// Comprobem que es del seu color
+			while (matrizTablero[filaPrincipi][columnaPrincipi] != '•') {
 				
-			
-				// Demanem Posició on es vol moure (Fila + Columna)
-			
-			
-				// Comprobem que el moviment es legal
-			
-			
-				// Comprobem que no esta ocupat
+				// Indiquem que la posicio es incorrecte
+				System.out.println("La posicio es incorrecte");
 				
+				// Fila
+				System.out.println("Fila on tens la fitxa:");
+				filaPrincipi = teclado.nextInt();
 				
-				// Comprobem si hi ha una altre peça que mata
+				// Columna
+				System.out.println("Columna on tens la fitxa:");
+				columnaPrincipi = teclado.nextInt();
+			}
+
+			// Demanem Posició on es vol moure (Fila + Columna)
+			// Fila
+			System.out.println("Fila on mouras la fitxa:");
+			int filaFinal = teclado.nextInt();
+
+			// Columna
+			System.out.println("Columna on mouras la fitxa:");
+			int columnaFinal = teclado.nextInt();
+
+			// Comprobem que el moviment es legal
+			while ((filaPrincipi + 1 != filaFinal) || (filaPrincipi - 1 != filaFinal) && (columnaPrincipi + 1 != columnaFinal) || (columnaPrincipi - 1 != columnaFinal)) {
+				// Indiquem que no es pot moure a aquesta posicio
+				System.out.println("No es pot moure a la fila " + filaFinal + " i columna " + columnaFinal);
 				
-				
-				// Movem la fitxa
-				
-				
-				// Comprobem si mata
-				// Si mata, matar
-				
-				// Un cop moguda, comprobem si torna a matar
-				
-				
-				// Si pot matar, matar un altre cop
-		
+				// Fila
+				System.out.println("Fila on mouras la fitxa:");
+				filaFinal = teclado.nextInt();
+
+				// Columna
+				System.out.println("Columna on mouras la fitxa:");
+				columnaFinal = teclado.nextInt();
+			}
+
+			// Comprobem que no esta ocupat
+
+
+			// Comprobem si hi ha una altre peça que mata
+
+
+			// Movem la fitxa
+
+
+			// Comprobem si mata
+			// Si mata, matar
+
+			// Un cop moguda, comprobem si torna a matar
+
+
+			// Si pot matar, matar un altre cop
+
 		
 		
 		// Comença Torn Blanques
@@ -137,6 +184,7 @@ public class Projecte {
 				
 				
 				// Si pot matar, matar un altre cop
+		}
 				
 	}
 	
