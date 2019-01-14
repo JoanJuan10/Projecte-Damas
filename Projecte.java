@@ -13,6 +13,33 @@ public class Projecte {
 		System.out.println("3 - Per a sortir");
 		int seleccio = teclado.nextInt();
 		
+		char[][] matrizTablero =     {{'-','○','-','○','-','○','-','○'},
+                					{'○','-','○','-','○','-','○','-'},
+                					{'-','○','-','○','-','○','-','○'},
+                					{'-','-','-','-','-','-','-','-'},
+                					{'-','-','-','-','-','-','-','-'},
+                					{'•','-','•','-','•','-','•','-'},
+                					{'-','•','-','•','-','•','-','•'},
+                					{'•','-','•','-','•','-','•','-'}};
+		
+		
+		//System.out.println("○ • ☺ ☻");
+
+	}
+	public static void mostrarTaulell(char[][] matrizTablero) {
+		for (int l = 1; l < 9; l++) {
+			System.out.print("  " + l);
+		}
+		System.out.println();
+		for (int i = 0; i < matrizTablero.length; i++) {
+			System.out.print(i + 1);
+			for (int j = 0; j < matrizTablero[i].length; j++) {
+				System.out.print(" ");
+				System.out.print(matrizTablero[i][j]);
+				System.out.print(" ");
+			}
+			System.out.println();
+		}
 	}
 
 }
