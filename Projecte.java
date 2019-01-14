@@ -6,6 +6,7 @@ public class Projecte {
 
 		Scanner teclado = new Scanner(System.in);
 		
+		// Menu
 		System.out.println("Selecciona:");
 		System.out.println("1 - Per a jugar");
 		System.out.println("2 - Per a veure els records");
