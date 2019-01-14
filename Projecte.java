@@ -192,23 +192,43 @@ public class Projecte {
 	public static void veureRecords() {
 		
 	}
-	public static void movimentBlanc(int filaPrincipi, int columnaPrincipi, int filaFinal, int ColumnaFinal, char[][] matrizTablero) {
-		
+	public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
+		// Moviment Blanc
+		if (color == 1) {
+			if (coronat) {
+				matrizTablero[filaPrincipi][columnaPrincipi] = '-';
+				matrizTablero[filaFinal][columnaFinal] = '☺';
+			}
+			else {
+				matrizTablero[filaPrincipi][columnaPrincipi] = '-';
+				matrizTablero[filaFinal][columnaFinal] = '○';
+			}
+		}
+		// Moviment Negre
+		else if (color == 2) {
+			if (coronat) {
+				matrizTablero[filaPrincipi][columnaPrincipi] = '-';
+				matrizTablero[filaFinal][columnaFinal] = '☻';
+			}
+			else {
+				matrizTablero[filaPrincipi][columnaPrincipi] = '-';
+				matrizTablero[filaFinal][columnaFinal] = '•';
+			}
+		}
+		else {
+			System.out.println("No deberias ver esto (CODE: movimentBlanc - COLOR ERROR)");
+		}
+
+		return matrizTablero;
 	}
-	public static void movimentNegre(int filaPrincipi, int columnaPrincipi, int filaFinal, int ColumnaFinal, char[][] matrizTablero) {
-		
-	}
-	public static void movimentCoronat(int color,int filaPrincipi, int columnaPrincipi, int filaFinal, int ColumnaFinal, char[][] matrizTablero) {
-		
-	}
-	public static void coronacio(int color, int fila, int columna, char[][] matrizTablero) {
+	public static char[][] coronacio(int color, int fila, int columna, char[][] matrizTablero) {
 		
 	}
 	public static boolean colocacioCorrecta(int fila, int columna, char[][] matrizTablero) {
 		
 		return true;
 	}
-	public static void matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
+	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
 		
 	}
 }
