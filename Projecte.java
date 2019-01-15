@@ -82,7 +82,8 @@ public class Projecte {
 			int columnaPrincipi = -1;
 			int filaFinal;
 			int columnaFinal;
-			boolean coronat = false;
+			int filaMatada;
+			int columnaMatada;
 
 			// Imprimim Taula
 			mostrarTaulell(matrizTablero);
@@ -122,18 +123,21 @@ public class Projecte {
 					fitxaCorrecta = true;
 				}
 
-				// Comprobem que la fitxa esta coronada
-
-				// Comprobem que el moviment es legal
-
-				// Comprobem que no esta ocupat
-
 				// Comprobem si hi ha una altre peça que mata
-
+				
+				
 				// Movem la fitxa
-				moviment(coronat, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
-
+				if (matrizTablero[filaPrincipi][columnaPrincipi] == '•') {
+					matrizTablero = moviment(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+					} 
+				else {
+					matrizTablero = moviment(true, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+				}
+				
 				// Comprobem si mata
+					
+					// Si fa la diagonal amb una BLANCA i te lloc a la casella seguent, la mata
+				
 				// Si mata, matar
 
 				// Un cop moguda, comprobem si torna a matar
@@ -259,10 +263,10 @@ public class Projecte {
 	}
 	public static boolean colocacioCorrecta(int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
 		// Comprobem que el moviment es legal
-		
-		// Comprobem que no esta ocupat
+
+				// Comprobem que no esta ocupat
 	}
 	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
-
+		
 	}
 }
