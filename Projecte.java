@@ -258,7 +258,9 @@ public class Projecte {
 		}
 	}
 	public static boolean colocacioCorrecta(int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
-		return true;
+		// Comprobem que el moviment es legal
+		
+		// Comprobem que no esta ocupat
 	}
 	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
 
