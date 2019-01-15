@@ -110,7 +110,7 @@ public class Projecte {
 
 			
 			// Comprobem que el moviment es legal
-
+			
 			// Comprobem que no esta ocupat
 
 
@@ -202,7 +202,20 @@ public class Projecte {
 		return matrizTablero;
 	}
 	public static char[][] coronacio(int color, int fila, int columna, char[][] matrizTablero) {
-		
+		if (color == 1) {
+			if (matrizTablero[fila][columna] == '•' && fila == 0) {
+				matrizTablero[fila][columna] = '☻';
+			}
+		}
+		else if (color == 2) {
+			if (matrizTablero[fila][columna] == '○' && fila == 7) {
+				matrizTablero[fila][columna] = '☺';
+			}
+		}
+		else {
+			System.out.println("No deberias ver esto (CODE: coronacio - COLOR ERROR)");
+		}
+		return matrizTablero;
 	}
 	public static boolean comprobacioColorFitxa(int color, int fila, int columna, char[][] matrizTablero) {
 		if (color == 1) {
