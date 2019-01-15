@@ -269,4 +269,18 @@ public class Projecte {
 	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
 		
 	}
+	// Comprovem si pot matar
+	public static boolean saberMatar(int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFInal, char[][] matrizTablero) {
+		
+	// Si te una fitxa de diferent color a qualsevol diagonal i la nostra fitxa es coronada
+	if (matrizTablero[filaPrincipi][columnaPrincipi] == '☻' && matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '○')
+		// Pot matar
+		
+	// Si te una fitxa de diferent color a la diagonal de davant
+		
+		// Pot matar
+		
+	// Sino, no pot matar
+		
+	}
 }
