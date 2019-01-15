@@ -224,7 +224,7 @@ public class Projecte {
 	public static char[][] coronacio(int color, int fila, int columna, char[][] matrizTablero) {
 		
 	}
-	public static boolean colocacioCorrecta(int fila, int columna, char[][] matrizTablero) {
+	public static boolean colocacioCorrecta(int principiFila, int principiColumna, int finalFila, int finalColumna, char[][] matrizTablero) {
 		
 		return true;
 	}
