@@ -25,25 +25,25 @@ public class Projecte {
 				ejecucion = false;
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
+
+
 		char[][] matrizTablero =     {{'-','○','-','○','-','○','-','○'},
-                					{'○','-','○','-','○','-','○','-'},
-                					{'-','○','-','○','-','○','-','○'},
-                					{'-','-','-','-','-','-','-','-'},
-                					{'-','-','-','-','-','-','-','-'},
-                					{'•','-','•','-','•','-','•','-'},
-                					{'-','•','-','•','-','•','-','•'},
-                					{'•','-','•','-','•','-','•','-'}};
-		
-		
+				{'○','-','○','-','○','-','○','-'},
+				{'-','○','-','○','-','○','-','○'},
+				{'-','-','-','-','-','-','-','-'},
+				{'-','-','-','-','-','-','-','-'},
+				{'•','-','•','-','•','-','•','-'},
+				{'-','•','-','•','-','•','-','•'},
+				{'•','-','•','-','•','-','•','-'}};
+
+
 		//System.out.println("○ • ☺ ☻");
 
 	}
@@ -64,7 +64,7 @@ public class Projecte {
 	}
 	public static void joc() {
 		Scanner teclado = new Scanner(System.in);
-		
+
 		// Variables Inicials
 		char[][] matrizTablero =     {{'-','○','-','○','-','○','-','○'},
 				{'○','-','○','-','○','-','○','-'},
@@ -74,103 +74,116 @@ public class Projecte {
 				{'•','-','•','-','•','-','•','-'},
 				{'-','•','-','•','-','•','-','•'},
 				{'•','-','•','-','•','-','•','-'}};
-		
-	while (true) {
+
+		while (true) {
 			// Comença Torn Negres
 			boolean fitxaCorrecta = false;
+			int filaPrincipi = -1;
+			int columnaPrincipi = -1;
+			int filaFinal;
+			int columnaFinal;
+			boolean coronat = false;
 
 			// Imprimim Taula
 			mostrarTaulell(matrizTablero);
 
 			// Demanem Posició que es vol moure (Fila + Columna)
 			System.out.println("Torn de les NEGRES");
-			
+
 			while (!fitxaCorrecta) {
-			// Fila
+				// Fila
 				System.out.println("Fila on tens la fitxa:");
-				int filaPrincipi = teclado.nextInt();
+				filaPrincipi = teclado.nextInt();
 
 				// Columna
 				System.out.println("Columna on tens la fitxa:");
-				int columnaPrincipi = teclado.nextInt();
+				columnaPrincipi = teclado.nextInt();
 
 				// Comprobem que es del seu color
-				comprobacioColorFitxa(2, filaPrincipi, columnaPrincipi, matrizTablero);
-				
-
+				if(comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero)) {
+					fitxaCorrecta = true;
+				}
 			}
-			// Demanem Posició on es vol moure (Fila + Columna)
-			// Fila
-			System.out.println("Fila on mouras la fitxa:");
-			int filaFinal = teclado.nextInt();
 
-			// Columna
-			System.out.println("Columna on mouras la fitxa:");
-			int columnaFinal = teclado.nextInt();
+			fitxaCorrecta = false;
 
-			
-			// Comprobem que el moviment es legal
-			
-			// Comprobem que no esta ocupat
-
-
-			// Comprobem si hi ha una altre peça que mata
-
-
-			// Movem la fitxa
-
-
-			// Comprobem si mata
-			// Si mata, matar
-
-			// Un cop moguda, comprobem si torna a matar
-
-
-			// Si pot matar, matar un altre cop
-
-		
-		
-		// Comença Torn Blanques
-		
-		
-				// Imprimim Taula
-		
-		
-				// Demanem Posició que es vol moure (Fila + Columna)
-				
-				
-				// Comprobem que es del seu color
-				
-				
+			while (!fitxaCorrecta) {
 				// Demanem Posició on es vol moure (Fila + Columna)
-				
-				
+				// Fila
+				System.out.println("Fila on mouras la fitxa:");
+				filaFinal = teclado.nextInt();
+
+				// Columna
+				System.out.println("Columna on mouras la fitxa:");
+				columnaFinal = teclado.nextInt();
+
+				// Comprobem que es pot moure alla
+				if(colocacioCorrecta(filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero)) {
+					fitxaCorrecta = true;
+				}
+
+				// Comprobem que la fitxa esta coronada
+
 				// Comprobem que el moviment es legal
-				
-				
+
 				// Comprobem que no esta ocupat
-				
-				
+
 				// Comprobem si hi ha una altre peça que mata
-				
-				
+
 				// Movem la fitxa
-				
-				
+				moviment(coronat, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+
 				// Comprobem si mata
 				// Si mata, matar
-				
+
 				// Un cop moguda, comprobem si torna a matar
-				
-				
+
+
 				// Si pot matar, matar un altre cop
+
+
+
+				// Comença Torn Blanques
+
+
+				// Imprimim Taula
+
+
+				// Demanem Posició que es vol moure (Fila + Columna)
+
+
+				// Comprobem que es del seu color
+
+
+				// Demanem Posició on es vol moure (Fila + Columna)
+
+
+				// Comprobem que el moviment es legal
+
+
+				// Comprobem que no esta ocupat
+
+
+				// Comprobem si hi ha una altre peça que mata
+
+
+				// Movem la fitxa
+
+
+				// Comprobem si mata
+				// Si mata, matar
+
+				// Un cop moguda, comprobem si torna a matar
+
+
+				// Si pot matar, matar un altre cop
+			}
 		}
-				
 	}
-	
-	
+
+
 	public static void veureRecords() {
-		
+
 	}
 	public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
 		// Moviment Blanc
@@ -202,6 +215,7 @@ public class Projecte {
 		return matrizTablero;
 	}
 	public static char[][] coronacio(int color, int fila, int columna, char[][] matrizTablero) {
+
 		if (color == 1) {
 			if (matrizTablero[fila][columna] == '•' && fila == 0) {
 				matrizTablero[fila][columna] = '☻';
@@ -216,6 +230,7 @@ public class Projecte {
 			System.out.println("No deberias ver esto (CODE: coronacio - COLOR ERROR)");
 		}
 		return matrizTablero;
+
 	}
 	public static boolean comprobacioColorFitxa(int color, int fila, int columna, char[][] matrizTablero) {
 		if (color == 1) {
@@ -242,10 +257,10 @@ public class Projecte {
 			return false;
 		}
 	}
-	public static boolean colocacioCorrecta(int principiFila, int principiColumna, int finalFila, int finalColumna, char[][] matrizTablero) {
+	public static boolean colocacioCorrecta(int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
 		return true;
 	}
 	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
-		
+
 	}
 }
