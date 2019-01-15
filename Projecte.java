@@ -221,11 +221,13 @@ public class Projecte {
 	public static char[][] coronacio(int color, int fila, int columna, char[][] matrizTablero) {
 
 		if (color == 1) {
+			// Negre
 			if (matrizTablero[fila][columna] == '•' && fila == 0) {
 				matrizTablero[fila][columna] = '☻';
 			}
 		}
 		else if (color == 2) {
+			// Blanc
 			if (matrizTablero[fila][columna] == '○' && fila == 7) {
 				matrizTablero[fila][columna] = '☺';
 			}
@@ -238,7 +240,7 @@ public class Projecte {
 	}
 	public static boolean comprobacioColorFitxa(int color, int fila, int columna, char[][] matrizTablero) {
 		if (color == 1) {
-
+			// Negre
 			if (matrizTablero[fila][columna] == '•' || matrizTablero[fila][columna] == '☻') {
 				return true;
 			}
@@ -248,6 +250,7 @@ public class Projecte {
 			}
 		}
 		else if (color == 2) {
+			// Blanc
 			if (matrizTablero[fila][columna] == '○' || matrizTablero[fila][columna] == '☺') {
 				return true;
 			}
@@ -261,26 +264,104 @@ public class Projecte {
 			return false;
 		}
 	}
-	public static boolean colocacioCorrecta(int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
+	public static boolean colocacioCorrecta(boolean coronat,int color,int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
 		// Comprobem que el moviment es legal
+		boolean legal = false;
+		if (color == 1) {
+			// Negre
+			if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '○') {
+				legal = true;
+			}
+			else if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '○') {
+				legal = true;
+			}
+			else if (coronat) {
+				if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '○') {
+					legal = true;
+				}
+				else if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '○') {
+					legal = true;
+				}
+			}
+		}
+		else if (color == 2) {
+			// Negre
+			if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '•') {
+				legal = true;
+			}
+			else if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '•') {
+				legal = true;
+			}
+			else if (coronat) {
+				if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '•') {
+					legal = true;
+				}
+				else if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '•') {
+					legal = true;
+				}
+			}
+		}
+		else {
+			System.out.println("No deberias ver esto (CODE: colocacioCorrecta - COLOR ERROR)");
+		}
 
-				// Comprobem que no esta ocupat
+
+
+
+
+		// Comprobem que no esta ocupat
 	}
 	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
-		
+
 	}
-	// Comprovem si pot matar
-	public static boolean saberMatar(int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFInal, char[][] matrizTablero) {
-		
-	// Si te una fitxa de diferent color a qualsevol diagonal i la nostra fitxa es coronada
-	if (matrizTablero[filaPrincipi][columnaPrincipi] == '☻' && matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '○')
-		// Pot matar
-		
-	// Si te una fitxa de diferent color a la diagonal de davant
-		
-		// Pot matar
-		
-	// Sino, no pot matar
-		
+	public static boolean saberMatar(boolean coronat, int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
+
+		// Comprobem que el moviment es legal
+		boolean legal = false;
+		if (color == 1) {
+			// Negre
+			if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '○') {
+				legal = true;
+			}
+			else if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '○') {
+				legal = true;
+			}
+			else if (coronat) {
+				if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '○') {
+					legal = true;
+				}
+				else if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '○') {
+					legal = true;
+				}
+			}
+		}
+		else if (color == 2) {
+			// Negre
+			if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '•') {
+				legal = true;
+			}
+			else if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '•') {
+				legal = true;
+			}
+			else if (coronat) {
+				if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '•') {
+					legal = true;
+				}
+				else if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '•') {
+					legal = true;
+				}
+			}
+		}
+		else {
+			System.out.println("No deberias ver esto (CODE: colocacioCorrecta - COLOR ERROR)");
+		}
+
+
+
+
+
+		// Comprobem que no esta ocupat
 	}
+
 }
+
