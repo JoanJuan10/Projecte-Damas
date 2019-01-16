@@ -60,7 +60,7 @@ public class Projecte {
 
 		while (true) {
 			// Comença Torn Negres
-			boolean fitxaCorrecta = false;
+			boolean fitxaNoCorrecta = true;
 			int filaPrincipi = -1;
 			int columnaPrincipi = -1;
 			int filaFinal;
@@ -74,7 +74,7 @@ public class Projecte {
 			// Demanem Posició que es vol moure (Fila + Columna)
 			System.out.println("Torn de les NEGRES");
 
-			while (!fitxaCorrecta) {
+			while (fitxaNoCorrecta) {
 				// Fila
 				System.out.println("Fila on tens la fitxa:");
 				filaPrincipi = teclado.nextInt();
@@ -85,7 +85,7 @@ public class Projecte {
 
 				// Comprobem que es del seu color
 				
-				comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero);
+				boolean colorFitxa = comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero);
 				
 
 				// Comprobem si hi ha una altre peça que mata
@@ -308,7 +308,7 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 
 		// Comprobem que no esta ocupat
 	}
-	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero)
+	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
 
 	}
 
@@ -326,17 +326,17 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 				if (color == 1) {
 					if (matrizTablero[i][j] == '•' || matrizTablero[i][j] == '☻') {
 						if (matrizTablero[i][j] != matrizTablero[fila][columna]) {
-							if (matrizTablero[i - 1][j + 1] == '☺' || matrizTablero[i - 1][j + 1] == '○') {
+							if (i >= 1 && j < 7 && (matrizTablero[i - 1][j + 1] == '☺' || matrizTablero[i - 1][j + 1] == '○')) {
 								hiHaUnaAltrePeça = true;
 							}
-							else if (matrizTablero[i - 1][j - 1] == '☺' || matrizTablero[i - 1][j - 1] == '○') {
+							else if (i >= 1 && j >= 1 && (matrizTablero[i - 1][j - 1] == '☺' || matrizTablero[i - 1][j - 1] == '○')) {
 								hiHaUnaAltrePeça = true;
 							}
 							else if (matrizTablero[i][j] == '☻') {
-								if (matrizTablero[i + 1][j + 1] == '☺' || matrizTablero[i + 1][j + 1] == '○') {
+								if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☺' || matrizTablero[i + 1][j + 1] == '○')) {
 									hiHaUnaAltrePeça = true;
 								}
-								else if (matrizTablero[i + 1][j - 1] == '☺' || matrizTablero[i + 1][j - 1] == '○') {
+								else if (i < 7 && j >= 1 && (matrizTablero[i + 1][j - 1] == '☺' || matrizTablero[i + 1][j - 1] == '○')) {
 									hiHaUnaAltrePeça = true;
 								}
 							}
@@ -347,17 +347,17 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 				else if (color == 2) {
 					if (matrizTablero[i][j] == '○' || matrizTablero[i][j] == '☺') {
 						if (matrizTablero[i][j] != matrizTablero[fila][columna]) {
-							if (matrizTablero[i - 1][j + 1] == '☻' || matrizTablero[i - 1][j + 1] == '•') {
+							if (i >= 1 && j < 7 && (matrizTablero[i - 1][j + 1] == '☻' || matrizTablero[i - 1][j + 1] == '•')) {
 								hiHaUnaAltrePeça = true;
 							}
-							else if (matrizTablero[i - 1][j - 1] == '☻' || matrizTablero[i - 1][j - 1] == '•') {
+							else if (i >= 1 && j >= 7 && (matrizTablero[i - 1][j - 1] == '☻' || matrizTablero[i - 1][j - 1] == '•')) {
 								hiHaUnaAltrePeça = true;
 							}
 							else if (matrizTablero[i][j] == '☺') {
-								if (matrizTablero[i + 1][j + 1] == '☻' || matrizTablero[i + 1][j + 1] == '•') {
+								if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☻' || matrizTablero[i + 1][j + 1] == '•')) {
 									hiHaUnaAltrePeça = true;
 								}
-								else if (matrizTablero[i + 1][j - 1] == '☻' || matrizTablero[i + 1][j - 1] == '•') {
+								else if (i < 7 && j >= 7 && (matrizTablero[i + 1][j - 1] == '☻' || matrizTablero[i + 1][j - 1] == '•')) {
 									hiHaUnaAltrePeça = true;
 								}
 							}
@@ -376,4 +376,3 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 	}
 
 }
-
