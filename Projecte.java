@@ -89,10 +89,21 @@ public class Projecte {
 				
 
 				// Comprobem si hi ha una altre peça que mata
+				if (colorFitxa) {
+					boolean unAltreMata = saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
+
+					if (unAltreMata) {
+						System.out.println("Pots matar amb un altre peça!");
+					}
+					else {
+						fitxaNoCorrecta = false;
+					}
+				}
+				else {
+					System.out.println("Aqui no hi ha una peça o aquesta peça no es teva");
+				}
 				
-				saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
-				
-				
+			}
 				// Movem la fitxa
 		
 				// Comprobem si mata
@@ -144,7 +155,6 @@ public class Projecte {
 				// Si pot matar, matar un altre cop
 			}
 		}
-	}
 public static void veureRecords() {
 
 }
@@ -318,7 +328,6 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 
 
 	public static boolean saberSiAltrePeçaMata(int color, int fila, int columna, char[][] matrizTablero) {
-		boolean hiHaUnaAltrePeça = false;
 
 		// Negre
 		for (int i = 0; i < matrizTablero.length; i++) {
@@ -327,17 +336,27 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 					if (matrizTablero[i][j] == '•' || matrizTablero[i][j] == '☻') {
 						if (matrizTablero[i][j] != matrizTablero[fila][columna]) {
 							if (i >= 1 && j < 7 && (matrizTablero[i - 1][j + 1] == '☺' || matrizTablero[i - 1][j + 1] == '○')) {
-								hiHaUnaAltrePeça = true;
+								if (i >= 1 && j < 7 && (matrizTablero[i - 2][j + 2] == '-' || matrizTablero[i - 2][j + 2] == '-')) {
+
+									return true;
+								}
 							}
 							else if (i >= 1 && j >= 1 && (matrizTablero[i - 1][j - 1] == '☺' || matrizTablero[i - 1][j - 1] == '○')) {
-								hiHaUnaAltrePeça = true;
+								if (i >= 1 && j >= 1 && (matrizTablero[i - 2][j - 2] == '-' || matrizTablero[i - 2][j - 2] == '-')) {
+
+									return true;
+								}
 							}
 							else if (matrizTablero[i][j] == '☻') {
 								if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☺' || matrizTablero[i + 1][j + 1] == '○')) {
-									hiHaUnaAltrePeça = true;
+									if (i < 7 && j < 7 && (matrizTablero[i + 2][j + 2] == '-' || matrizTablero[i + 2][j + 2] == '-')) {
+										return true;
+									}
 								}
 								else if (i < 7 && j >= 1 && (matrizTablero[i + 1][j - 1] == '☺' || matrizTablero[i + 1][j - 1] == '○')) {
-									hiHaUnaAltrePeça = true;
+									if (i < 7 && j >= 1 && (matrizTablero[i + 2][j - 2] == '-' || matrizTablero[i + 2][j - 2] == '-')) {
+										return true;
+									}
 								}
 							}
 						}
@@ -348,17 +367,26 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 					if (matrizTablero[i][j] == '○' || matrizTablero[i][j] == '☺') {
 						if (matrizTablero[i][j] != matrizTablero[fila][columna]) {
 							if (i >= 1 && j < 7 && (matrizTablero[i - 1][j + 1] == '☻' || matrizTablero[i - 1][j + 1] == '•')) {
-								hiHaUnaAltrePeça = true;
+								if (i >= 1 && j < 7 && (matrizTablero[i - 2][j + 2] == '-' || matrizTablero[i - 2][j + 2] == '-')) {
+								return true;
+								}
 							}
 							else if (i >= 1 && j >= 7 && (matrizTablero[i - 1][j - 1] == '☻' || matrizTablero[i - 1][j - 1] == '•')) {
-								hiHaUnaAltrePeça = true;
+								if (i >= 1 && j >= 1 && (matrizTablero[i - 2][j - 2] == '-' || matrizTablero[i - 2][j - 2] == '-')) {
+								return true;
+								}
 							}
 							else if (matrizTablero[i][j] == '☺') {
 								if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☻' || matrizTablero[i + 1][j + 1] == '•')) {
-									hiHaUnaAltrePeça = true;
+									if (i < 7 && j < 7 && (matrizTablero[i + 2][j + 2] == '-' || matrizTablero[i + 2][j + 2] == '-')) {
+										
+									return true;
+									}
 								}
 								else if (i < 7 && j >= 7 && (matrizTablero[i + 1][j - 1] == '☻' || matrizTablero[i + 1][j - 1] == '•')) {
-									hiHaUnaAltrePeça = true;
+									if (i < 7 && j >= 1 && (matrizTablero[i + 2][j - 2] == '-' || matrizTablero[i + 2][j - 2] == '-')) {
+									return true;
+									}
 								}
 							}
 						}
@@ -366,13 +394,6 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 				}
 			}
 		}
-		if (hiHaUnaAltrePeça) {
-			System.out.println("Pots matar amb un altre peça!");
-			return hiHaUnaAltrePeça;
-		}
-		else {
-			return hiHaUnaAltrePeça;
-		}
+		return false;
 	}
-
 }
