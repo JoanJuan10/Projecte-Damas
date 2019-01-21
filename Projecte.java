@@ -88,12 +88,22 @@ public class Projecte {
 				boolean colorFitxa = comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero);
 				
 
-				// Comprobem si hi ha una altre peça que mata
+								// Comprobem si hi ha una altre peça que mata
 				if (colorFitxa) {
 					boolean unAltreMata = saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
 
 					if (unAltreMata) {
 						System.out.println("Pots matar amb un altre peça!");
+						while (unAltreMata) {
+							
+							// Fila
+							System.out.println("Fila on tens la fitxa:");
+							filaPrincipi = teclado.nextInt() - 1;
+
+							// Columna
+							System.out.println("Columna on tens la fitxa:");
+							columnaPrincipi = teclado.nextInt() - 1;
+						}
 					}
 					else {
 						fitxaNoCorrecta = false;
@@ -101,10 +111,35 @@ public class Projecte {
 				}
 				else {
 					System.out.println("Aqui no hi ha una peça o aquesta peça no es teva");
+					
+					// Fila
+					System.out.println("Fila on tens la fitxa:");
+					filaPrincipi = teclado.nextInt() - 1;
+
+					// Columna
+					System.out.println("Columna on tens la fitxa:");
+					columnaPrincipi = teclado.nextInt() - 1;
 				}
 				
-			}
+				// Demanem on la volem moure
+				System.out.println("Fila on vols moure la fitxa:");
+				filaFinal = teclado.nextInt() - 1;
+
+				System.out.println("Columna on vols moure la fitxa:");
+				columnaFinal = teclado.nextInt() - 1;
+				
 				// Movem la fitxa
+				if (colocacioCorrecta(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero)) {
+				moviment(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+				} else {
+					System.out.println("Fila on vols moure la fitxa:");
+					filaFinal = teclado.nextInt() - 1;
+
+					System.out.println("Columna on vols moure la fitxa:");
+					columnaFinal = teclado.nextInt() - 1;
+				}
+					
+			}
 		
 				// Comprobem si mata
 					
