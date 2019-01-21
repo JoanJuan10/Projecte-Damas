@@ -60,7 +60,6 @@ public class Projecte {
 
 		while (true) {
 			// Comença Torn Negres
-			boolean fitxaNoCorrecta = true;
 			int filaPrincipi = -1;
 			int columnaPrincipi = -1;
 			int filaFinal;
@@ -75,7 +74,7 @@ public class Projecte {
 			// Demanem Posició que es vol moure (Fila + Columna)
 			System.out.println("Torn de les NEGRES");
 
-			while (fitxaNoCorrecta && !colorFitxa && unAltreMata) {
+			while (!colorFitxa || unAltreMata) {
 				// Fila
 				System.out.println("Fila on tens la fitxa:");
 				filaPrincipi = teclado.nextInt();
@@ -383,21 +382,15 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 			return false;
 		}
 
-
-
-
-
 		// Comprobem que no esta ocupat
+		if (matrizTablero[filaFinal][columnaFinal] == '☻' || matrizTablero[filaFinal][columnaFinal] == '•' || matrizTablero[filaFinal][columnaFinal] == '☺' || matrizTablero[filaFinal][columnaFinal] == '○') {
+			System.out.println("Lugar ocupado");
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
-	public static char[][] matar(int color, int filaMatada, int columnaMatada, char[][] matrizTablero) {
-
-	}
-
-
-
-
-
-
 	public static boolean saberSiAltrePeçaMata(int color, int fila, int columna, char[][] matrizTablero) {
 
 		// Negre
