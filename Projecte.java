@@ -58,7 +58,9 @@ public class Projecte {
 				{'-','•','-','•','-','•','-','•'},
 				{'•','-','•','-','•','-','•','-'}};
 
-		while (true) {
+
+		boolean jocActiu = true;
+		while (jocActiu) {
 			// Comença Torn Negres
 			int filaPrincipi = -1;
 			int columnaPrincipi = -1;
@@ -68,56 +70,60 @@ public class Projecte {
 			int columnaMatada;
 			boolean colorFitxa = false;
 			boolean unAltreMata = true;
+			boolean tornNegres = true;
+			boolean tornBlanques = false;
 			// Imprimim Taula
-			mostrarTaulell(matrizTablero);
 
 			// Demanem Posició que es vol moure (Fila + Columna)
-			System.out.println("Torn de les NEGRES");
+			System.out.println("---| Torn de les NEGRES |---");
+			while (tornNegres) {
+				while (!colorFitxa || unAltreMata) {
+					mostrarTaulell(matrizTablero);
 
-			while (!colorFitxa || unAltreMata) {
-				// Fila
-				System.out.println("Fila on tens la fitxa:");
-				filaPrincipi = teclado.nextInt() - 1;
+					// Fila
+					System.out.println("Fila on tens la fitxa:");
+					filaPrincipi = teclado.nextInt() - 1;
 
-				// Columna
-				System.out.println("Columna on tens la fitxa:");
-				columnaPrincipi = teclado.nextInt() - 1;
+					// Columna
+					System.out.println("Columna on tens la fitxa:");
+					columnaPrincipi = teclado.nextInt() - 1;
 
-				// Comprobem que es del seu color
-				
-				colorFitxa = comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero);
-				unAltreMata = saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
-				
-				if (!colorFitxa) {
-					System.out.println("Aquesta fitxa no es teva");
+					// Comprobem que es del seu color
+
+					colorFitxa = comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero);
+					unAltreMata = saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
+
+					if (!colorFitxa) {
+						System.out.println("Aquesta fitxa no es teva");
+					}
+					else if (unAltreMata) {
+						System.out.println("Hi ha una altre peça que mata");
+					}
+
+					boolean colocacioCorrecta = false;
+					// Demanem on la volem moure
+					System.out.println("Fila on vols moure la fitxa:");
+					filaFinal = teclado.nextInt() - 1;
+
+					System.out.println("Columna on vols moure la fitxa:");
+					columnaFinal = teclado.nextInt() - 1;
+
+					// Comprobem que el moviment es correcte
+					colocacioCorrecta = colocacioCorrecta(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+
+					if (!colocacioCorrecta) {
+						System.out.println("La posicio sel·leccionada no es correcta");
+						colorFitxa = false;
+						unAltreMata = true;
+					}
 				}
-				else if (unAltreMata) {
-					System.out.println("Hi ha una altre peça que mata");
-				}
-			}
-			boolean colocacioCorrecta = false;
-			// Demanem on la volem moure
-			while (!colocacioCorrecta) {
-				System.out.println("Fila on vols moure la fitxa:");
-				filaFinal = teclado.nextInt() - 1;
-
-				System.out.println("Columna on vols moure la fitxa:");
-				columnaFinal = teclado.nextInt() - 1;
-				
-				// Comprobem que el moviment es correcte
-				colocacioCorrecta = colocacioCorrecta(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
-				
-				if (!colocacioCorrecta) {
-					System.out.println("La posicio sel·leccionada no es correcta");
-				}
-			}
-		}
 				// Movem la fitxa
-		
-				// Comprobem si mata
-					
-					// Si fa la diagonal amb una BLANCA i te lloc a la casella seguent, la mata
 				
+
+				// Comprobem si mata
+
+				// Si fa la diagonal amb una BLANCA i te lloc a la casella seguent, la mata
+
 				// Si mata, matar
 
 				// Un cop moguda, comprobem si torna a matar
@@ -145,10 +151,10 @@ public class Projecte {
 				// Comprobem que el moviment es legal
 
 
-		// Comprobem que no esta ocupat
+				// Comprobem que no esta ocupat
 
 
-		// Comprobem si hi ha una altre peça que mata
+				// Comprobem si hi ha una altre peça que mata
 
 
 				// Movem la fitxa
@@ -162,7 +168,9 @@ public class Projecte {
 
 				// Si pot matar, matar un altre cop
 			}
-public static void veureRecords() {
+		}
+	}
+	public static void veureRecords() {
 
 }
 public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
@@ -264,22 +272,22 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 		if (color == 1) {
 			// Negre
 			// Comprobem si vol moure endevant (Matant)
-			if (filaPrincipi - 2 > 0 && columnaPrincipi + 2 <= 8) {
+			if (filaPrincipi - 2 > 0 && columnaPrincipi + 2 < 8) {
 				if (matrizTablero[filaPrincipi - 2][columnaPrincipi + 2] == matrizTablero[filaFinal][columnaFinal]) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '○' || matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '☺') {
 						legal = true;
 					}
 				}
 			}
-			else if (filaPrincipi - 2 > 0 && columnaPrincipi - 2 <= 8) {
+			if (filaPrincipi - 2 > 0 && columnaPrincipi - 2 > 0) {
 				if (matrizTablero[filaPrincipi - 2][columnaPrincipi - 2] == matrizTablero[filaFinal][columnaFinal]) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '○' || matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '☺') {
 						legal = true;
 					}
 				}
 			}
-			else if (coronat) {
-				if (filaPrincipi + 2 <= 8 && columnaPrincipi + 2 <= 8) {
+			if (coronat) {
+				if (filaPrincipi + 2 < 8 && columnaPrincipi + 2 < 8) {
 					// Comprobem si vol moure endarrere (Matant)
 					if (matrizTablero[filaPrincipi + 2][columnaPrincipi + 2] == matrizTablero[filaFinal][columnaFinal]) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '○' || matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '☺') {
@@ -287,7 +295,7 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 						}
 					}
 				}
-				else if (filaPrincipi + 2 <= 8 && columnaPrincipi - 2 > 0) {
+				else if (filaPrincipi + 2 < 8 && columnaPrincipi - 2 > 0) {
 					if (matrizTablero[filaPrincipi + 2][columnaPrincipi - 2] == matrizTablero[filaFinal][columnaFinal]) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '○' || matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '☺') {
 							legal = true;
@@ -296,7 +304,7 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 				}
 			}
 			// Comprobem si vol moure's endevant (No Matant)
-			else if (filaPrincipi - 1 > 0 && columnaPrincipi + 1 <= 8) {
+			else if (filaPrincipi - 1 > 0 && columnaPrincipi + 1 < 8) {
 				if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == matrizTablero[filaFinal][columnaFinal]) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '-'){
 						legal = true;
@@ -312,14 +320,14 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 			}
 			else if (coronat) {
 				// Comprobem si vol moure's endarrere (No Matant)
-				if (filaPrincipi + 1 <= 8 && columnaPrincipi + 1 <= 8) {
+				if (filaPrincipi + 1 < 8 && columnaPrincipi + 1 < 8) {
 					if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == matrizTablero[filaFinal][columnaFinal]) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '-') {
 							legal = true;
 						}
 					}
 				}
-				else if (filaPrincipi + 1 <= 8 && columnaPrincipi - 1 > 0) {
+				else if (filaPrincipi + 1 < 8 && columnaPrincipi - 1 > 0) {
 					if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == matrizTablero[filaFinal][columnaFinal]) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '-') {
 							legal = true;
@@ -384,7 +392,7 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 					legal = false;
 				}
 			}
-			else {
+			if (color > 3 || color < 1) {
 				System.out.println("No deberias ver esto (CODE: colocacioCorrecta - COLOR ERROR)");
 			}
 
