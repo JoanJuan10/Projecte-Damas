@@ -81,12 +81,16 @@ public class Projecte {
 					mostrarTaulell(matrizTablero);
 
 					// Fila
+					while (filaPrincipi < 0 || filaPrincipi > 8) {
 					System.out.println("Fila on tens la fitxa:");
 					filaPrincipi = teclado.nextInt() - 1;
-
+					}
+					
 					// Columna
+					while (columnaPrincipi < 0 || columnaPrincipi > 8) {
 					System.out.println("Columna on tens la fitxa:");
 					columnaPrincipi = teclado.nextInt() - 1;
+					}
 
 					// Comprobem que es del seu color
 
@@ -102,11 +106,15 @@ public class Projecte {
 
 					boolean colocacioCorrecta = false;
 					// Demanem on la volem moure
+					while (filaFinal < 0 || filaFinal > 8) {
 					System.out.println("Fila on vols moure la fitxa:");
 					filaFinal = teclado.nextInt() - 1;
-
+					}
+					
+					while (columnaFinal < 0 || columnaFinal > 8) {
 					System.out.println("Columna on vols moure la fitxa:");
 					columnaFinal = teclado.nextInt() - 1;
+					}
 
 					// Comprobem que el moviment es correcte
 					colocacioCorrecta = colocacioCorrecta(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
