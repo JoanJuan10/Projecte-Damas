@@ -62,10 +62,10 @@ public class Projecte {
 		boolean jocActiu = true;
 		while (jocActiu) {
 			// Comença Torn Negres
-			int filaPrincipi = 0;
-			int columnaPrincipi = 0;
-			int filaFinal = 0;
-			int columnaFinal = 0;
+			int filaPrincipi = -1;
+			int columnaPrincipi = -1;
+			int filaFinal = -1;
+			int columnaFinal = -1;
 			int filaMatada;
 			int columnaMatada;
 			boolean colorFitxa = false;
@@ -82,14 +82,14 @@ public class Projecte {
 
 					// Fila
 					while (filaPrincipi < 0 || filaPrincipi > 8) {
-					System.out.println("Fila on tens la fitxa:");
-					filaPrincipi = teclado.nextInt() - 1;
+						System.out.println("Fila on tens la fitxa:");
+						filaPrincipi = teclado.nextInt() - 1;
 					}
-					
+
 					// Columna
 					while (columnaPrincipi < 0 || columnaPrincipi > 8) {
-					System.out.println("Columna on tens la fitxa:");
-					columnaPrincipi = teclado.nextInt() - 1;
+						System.out.println("Columna on tens la fitxa:");
+						columnaPrincipi = teclado.nextInt() - 1;
 					}
 
 					// Comprobem que es del seu color
@@ -107,13 +107,13 @@ public class Projecte {
 					boolean colocacioCorrecta = false;
 					// Demanem on la volem moure
 					while (filaFinal < 0 || filaFinal > 8) {
-					System.out.println("Fila on vols moure la fitxa:");
-					filaFinal = teclado.nextInt() - 1;
+						System.out.println("Fila on vols moure la fitxa:");
+						filaFinal = teclado.nextInt() - 1;
 					}
-					
+
 					while (columnaFinal < 0 || columnaFinal > 8) {
-					System.out.println("Columna on vols moure la fitxa:");
-					columnaFinal = teclado.nextInt() - 1;
+						System.out.println("Columna on vols moure la fitxa:");
+						columnaFinal = teclado.nextInt() - 1;
 					}
 
 					// Comprobem que el moviment es correcte
@@ -187,10 +187,10 @@ public class Projecte {
 	}
 	public static void veureRecords() {
 
-}
-public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
-	// Moviment Blanc
-	if (color == 2) {
+	}
+	public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int columnaPrincipi, int filaFinal, int columnaFinal, char[][] matrizTablero) {
+		// Moviment Blanc
+		if (color == 2) {
 			if (coronat) {
 				matrizTablero[filaPrincipi][columnaPrincipi] = '-';
 				matrizTablero[filaFinal][columnaFinal] = '☺';
@@ -445,66 +445,65 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 		return false;
 	}
 
-		public static boolean saberSiAltrePeçaMata(int color, int fila, int columna, char[][] matrizTablero) {
+	public static boolean saberSiAltrePeçaMata(int color, int fila, int columna, char[][] matrizTablero) {
 
-			// Negre
-			for (int i = 0; i < matrizTablero.length; i++) {
-				for (int j = 0; j < matrizTablero[i].length; j++) {
-					if (color == 1) {
-						if (matrizTablero[i][j] == '•' || matrizTablero[i][j] == '☻') {
-							if (fila != i || columna != j) {
-								if (i > 0 && j < 7 && (matrizTablero[i - 1][j + 1] == '☺' || matrizTablero[i - 1][j + 1] == '○')) {
-									if (i > 0 && j < 7 && (matrizTablero[i - 2][j + 2] == '-' || matrizTablero[i - 2][j + 2] == '-')) {
+		// Negre
+		for (int i = 0; i < matrizTablero.length; i++) {
+			for (int j = 0; j < matrizTablero[i].length; j++) {
+				if (color == 1) {
+					if (matrizTablero[i][j] == '•' || matrizTablero[i][j] == '☻') {
+						if (fila != i || columna != j) {
+							if (i > 0 && j < 7 && (matrizTablero[i - 1][j + 1] == '☺' || matrizTablero[i - 1][j + 1] == '○')) {
+								if (i > 0 && j < 7 && (matrizTablero[i - 2][j + 2] == '-' || matrizTablero[i - 2][j + 2] == '-')) {
 
+									return true;
+								}
+							}
+							else if (i > 0 && j > 0 && (matrizTablero[i - 1][j - 1] == '☺' || matrizTablero[i - 1][j - 1] == '○')) {
+								if (i > 0 && j > 0 && (matrizTablero[i - 2][j - 2] == '-' || matrizTablero[i - 2][j - 2] == '-')) {
+
+									return true;
+								}
+							}
+							else if (matrizTablero[i][j] == '☻') {
+								if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☺' || matrizTablero[i + 1][j + 1] == '○')) {
+									if (i < 7 && j < 7 && (matrizTablero[i + 2][j + 2] == '-' || matrizTablero[i + 2][j + 2] == '-')) {
 										return true;
 									}
 								}
-								else if (i > 0 && j > 0 && (matrizTablero[i - 1][j - 1] == '☺' || matrizTablero[i - 1][j - 1] == '○')) {
-									if (i > 0 && j > 0 && (matrizTablero[i - 2][j - 2] == '-' || matrizTablero[i - 2][j - 2] == '-')) {
-
+								else if (i < 7 && j > 0 && (matrizTablero[i + 1][j - 1] == '☺' || matrizTablero[i + 1][j - 1] == '○')) {
+									if (i < 7 && j > 0 && (matrizTablero[i + 2][j - 2] == '-' || matrizTablero[i + 2][j - 2] == '-')) {
 										return true;
-									}
-								}
-								else if (matrizTablero[i][j] == '☻') {
-									if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☺' || matrizTablero[i + 1][j + 1] == '○')) {
-										if (i < 7 && j < 7 && (matrizTablero[i + 2][j + 2] == '-' || matrizTablero[i + 2][j + 2] == '-')) {
-											return true;
-										}
-									}
-									else if (i < 7 && j > 0 && (matrizTablero[i + 1][j - 1] == '☺' || matrizTablero[i + 1][j - 1] == '○')) {
-										if (i < 7 && j > 0 && (matrizTablero[i + 2][j - 2] == '-' || matrizTablero[i + 2][j - 2] == '-')) {
-											return true;
-										}
 									}
 								}
 							}
 						}
 					}
-					// Blanc
-					else if (color == 2) {
-						if (matrizTablero[i][j] == '○' || matrizTablero[i][j] == '☺') {
-							if (fila != i || columna != j) {
-								if (i > 0 && j < 7 && (matrizTablero[i - 1][j + 1] == '☻' || matrizTablero[i - 1][j + 1] == '•')) {
-									if (i > 0 && j < 7 && (matrizTablero[i - 2][j + 2] == '-' || matrizTablero[i - 2][j + 2] == '-')) {
-										return true;
-									}
+				}
+				// Blanc
+				else if (color == 2) {
+					if (matrizTablero[i][j] == '○' || matrizTablero[i][j] == '☺') {
+						if (fila != i || columna != j) {
+							if (i > 0 && j < 7 && (matrizTablero[i - 1][j + 1] == '☻' || matrizTablero[i - 1][j + 1] == '•')) {
+								if (i > 0 && j < 7 && (matrizTablero[i - 2][j + 2] == '-' || matrizTablero[i - 2][j + 2] == '-')) {
+									return true;
 								}
-								else if (i > 0 && j > 7 && (matrizTablero[i - 1][j - 1] == '☻' || matrizTablero[i - 1][j - 1] == '•')) {
-									if (i > 0 && j > 7 && (matrizTablero[i - 2][j - 2] == '-' || matrizTablero[i - 2][j - 2] == '-')) {
-										return true;
-									}
+							}
+							else if (i > 0 && j > 7 && (matrizTablero[i - 1][j - 1] == '☻' || matrizTablero[i - 1][j - 1] == '•')) {
+								if (i > 0 && j > 7 && (matrizTablero[i - 2][j - 2] == '-' || matrizTablero[i - 2][j - 2] == '-')) {
+									return true;
 								}
-								else if (matrizTablero[i][j] == '☺') {
-									if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☻' || matrizTablero[i + 1][j + 1] == '•')) {
-										if (i < 7 && j < 7 && (matrizTablero[i + 2][j + 2] == '-' || matrizTablero[i + 2][j + 2] == '-')) {
+							}
+							else if (matrizTablero[i][j] == '☺') {
+								if (i < 7 && j < 7 && (matrizTablero[i + 1][j + 1] == '☻' || matrizTablero[i + 1][j + 1] == '•')) {
+									if (i < 7 && j < 7 && (matrizTablero[i + 2][j + 2] == '-' || matrizTablero[i + 2][j + 2] == '-')) {
 
-											return true;
-										}
+										return true;
 									}
-									else if (i < 7 && j < 7 && (matrizTablero[i + 1][j - 1] == '☻' || matrizTablero[i + 1][j - 1] == '•')) {
-										if (i < 7 && j > 0 && (matrizTablero[i + 2][j - 2] == '-' || matrizTablero[i + 2][j - 2] == '-')) {
-											return true;
-										}
+								}
+								else if (i < 7 && j < 7 && (matrizTablero[i + 1][j - 1] == '☻' || matrizTablero[i + 1][j - 1] == '•')) {
+									if (i < 7 && j > 0 && (matrizTablero[i + 2][j - 2] == '-' || matrizTablero[i + 2][j - 2] == '-')) {
+										return true;
 									}
 								}
 							}
@@ -512,6 +511,7 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 					}
 				}
 			}
-			return false;
 		}
+		return false;
 	}
+}
