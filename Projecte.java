@@ -62,10 +62,10 @@ public class Projecte {
 		boolean jocActiu = true;
 		while (jocActiu) {
 			// Comença Torn Negres
-			int filaPrincipi = -1;
-			int columnaPrincipi = -1;
-			int filaFinal;
-			int columnaFinal;
+			int filaPrincipi = 0;
+			int columnaPrincipi = 0;
+			int filaFinal = 0;
+			int columnaFinal = 0;
 			int filaMatada;
 			int columnaMatada;
 			boolean colorFitxa = false;
@@ -118,8 +118,15 @@ public class Projecte {
 					}
 				}
 				// Movem la fitxa
-				
-
+				if (matrizTablero[filaPrincipi][columnaPrincipi] == '☻') {
+					moviment(true, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+				}
+				else {
+					moviment(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+				}
+				mostrarTaulell(matrizTablero);
+				jocActiu = false;
+				tornNegres = false;
 				// Comprobem si mata
 
 				// Si fa la diagonal amb una BLANCA i te lloc a la casella seguent, la mata
@@ -273,30 +280,30 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 			// Negre
 			// Comprobem si vol moure endevant (Matant)
 			if (filaPrincipi - 2 > 0 && columnaPrincipi + 2 < 8) {
-				if (matrizTablero[filaPrincipi - 2][columnaPrincipi + 2] == matrizTablero[filaFinal][columnaFinal]) {
+				if (filaPrincipi - 2 == filaFinal && columnaPrincipi + 2 == columnaFinal) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '○' || matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '☺') {
 						legal = true;
 					}
 				}
 			}
 			if (filaPrincipi - 2 > 0 && columnaPrincipi - 2 > 0) {
-				if (matrizTablero[filaPrincipi - 2][columnaPrincipi - 2] == matrizTablero[filaFinal][columnaFinal]) {
+				if (filaPrincipi - 2 == filaFinal && columnaPrincipi - 2 == columnaFinal) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '○' || matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '☺') {
 						legal = true;
 					}
 				}
 			}
 			if (coronat) {
+				// Comprobem si vol moure endarrere (Matant)
 				if (filaPrincipi + 2 < 8 && columnaPrincipi + 2 < 8) {
-					// Comprobem si vol moure endarrere (Matant)
-					if (matrizTablero[filaPrincipi + 2][columnaPrincipi + 2] == matrizTablero[filaFinal][columnaFinal]) {
+					if (filaPrincipi + 2 == filaFinal && columnaPrincipi + 2 == columnaFinal) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '○' || matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '☺') {
 							legal = true;
 						}
 					}
 				}
-				else if (filaPrincipi + 2 < 8 && columnaPrincipi - 2 > 0) {
-					if (matrizTablero[filaPrincipi + 2][columnaPrincipi - 2] == matrizTablero[filaFinal][columnaFinal]) {
+				if (filaPrincipi + 2 < 8 && columnaPrincipi - 2 > 0) {
+					if (filaPrincipi + 2 == filaFinal && columnaPrincipi - 2 == columnaFinal) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '○' || matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '☺') {
 							legal = true;
 						}
@@ -304,87 +311,100 @@ public static char[][] moviment(boolean coronat,int color, int filaPrincipi, int
 				}
 			}
 			// Comprobem si vol moure's endevant (No Matant)
-			else if (filaPrincipi - 1 > 0 && columnaPrincipi + 1 < 8) {
-				if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == matrizTablero[filaFinal][columnaFinal]) {
+			if (filaPrincipi - 1 > 0 && columnaPrincipi + 1 < 8) {
+				if (filaPrincipi - 1 == filaFinal && columnaPrincipi + 1 == columnaFinal) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '-'){
 						legal = true;
 					}
 				}
 			}
-			else if (filaPrincipi - 1 > 0 && columnaPrincipi - 1 > 0) {
-				if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == matrizTablero[filaFinal][columnaFinal]) {
+			if (filaPrincipi - 1 > 0 && columnaPrincipi - 1 > 0) {
+				if (filaPrincipi - 1 == filaFinal && columnaPrincipi - 1 == columnaFinal) {
 					if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '-') {
 						legal = true;
 					}
 				}
 			}
-			else if (coronat) {
+			if (coronat) {
 				// Comprobem si vol moure's endarrere (No Matant)
 				if (filaPrincipi + 1 < 8 && columnaPrincipi + 1 < 8) {
-					if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == matrizTablero[filaFinal][columnaFinal]) {
+					if (filaPrincipi + 1 == filaFinal && columnaPrincipi + 1 == columnaFinal) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '-') {
 							legal = true;
 						}
 					}
 				}
-				else if (filaPrincipi + 1 < 8 && columnaPrincipi - 1 > 0) {
-					if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == matrizTablero[filaFinal][columnaFinal]) {
+				if (filaPrincipi + 1 < 8 && columnaPrincipi - 1 > 0) {
+					if (filaPrincipi + 1 == filaFinal && columnaPrincipi - 1 == columnaFinal) {
 						if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '-') {
 							legal = true;
 						}
 					}
 				}
 			}
-			else {
-				legal = false;
-			}
-		if (color == 2) {
-			// Blanc
-			// Comprobem si vol moure endevant (Matant)
-			if (matrizTablero[filaPrincipi + 2][columnaPrincipi + 2] == matrizTablero[filaFinal][columnaFinal]) {
-				if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '•' || matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '☻') {
-					legal = true;
+			if (color == 2) {
+				// Blanc
+				// Comprobem si vol moure endevant (Matant)
+				if (filaPrincipi + 2 < 8 && columnaPrincipi + 2 < 8) {
+					if (filaPrincipi + 2 == filaFinal && columnaPrincipi + 2 == columnaFinal) {
+						if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '•' || matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '☻') {
+							legal = true;
+						}
+					}
 				}
-			}
-				else if (matrizTablero[filaPrincipi + 2][columnaPrincipi - 2] == matrizTablero[filaFinal][columnaFinal]) {
-					if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '•' || matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '☻') {
-						legal = true;
+				else if (filaPrincipi + 2 < 8 && columnaPrincipi - 2 > 0) {
+					if (filaPrincipi + 2 == filaFinal && columnaPrincipi - 2 == columnaFinal) {
+						if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '•' || matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '☻') {
+							legal = true;
 						}
 					}
-				if (coronat) {
+				}
+				else if (coronat) {
 					// Comprobem si vol moure endarrere (Matant)
-					if (matrizTablero[filaPrincipi - 2][columnaPrincipi + 2] == matrizTablero[filaFinal][columnaFinal]) {
-						if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '•' || matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '☻') {
-							legal = true;
+					if (filaPrincipi - 2 > 0 && columnaPrincipi + 2 < 8) {
+						if (filaPrincipi - 2 == filaFinal && columnaPrincipi + 2 == columnaFinal) {
+							if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '•' || matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '☻') {
+								legal = true;
+							}
 						}
 					}
-					else if (matrizTablero[filaPrincipi - 2][columnaPrincipi - 2] == matrizTablero[filaFinal][columnaFinal]) {
-						if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '•' || matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '☻') {
-							legal = true;
+					else if (filaPrincipi - 2 > 8 && columnaPrincipi - 2 > 0) {
+						if (filaPrincipi - 2 == filaFinal && columnaPrincipi - 2 == columnaFinal) {
+							if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '•' || matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '☻') {
+								legal = true;
+							}
 						}
 					}
 				}
 				// Comprobem si vol moure's endevant (No Matant)
-				if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == matrizTablero[filaFinal][columnaFinal]) {
-					if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '-'){
-						legal = true;
+				else if (filaPrincipi + 1 < 8 && columnaPrincipi + 1 < 8) {
+					if (filaPrincipi + 1 == filaFinal && columnaPrincipi + 1 == columnaFinal) {
+						if (matrizTablero[filaPrincipi + 1][columnaPrincipi + 1] == '-'){
+							legal = true;
+						}
 					}
 				}
-				else if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == matrizTablero[filaFinal][columnaFinal]) {
-					if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '-') {
-						legal = true;
+				else if (filaPrincipi + 1 < 8 && columnaPrincipi - 1 > 0) {
+					if (filaPrincipi + 1 == filaFinal && columnaPrincipi - 1 == columnaFinal) {
+						if (matrizTablero[filaPrincipi + 1][columnaPrincipi - 1] == '-') {
+							legal = true;
+						}
 					}
 				}
 				else if (coronat) {
 					// Comprobem si vol moure's endarrere (No Matant)
-					if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == matrizTablero[filaFinal][columnaFinal]) {
-						if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '-') {
-							legal = true;
+					if (filaPrincipi - 1 > 0 && columnaPrincipi + 1 < 8) {
+						if (filaPrincipi - 1 == filaFinal && columnaPrincipi + 1 == columnaFinal) {
+							if (matrizTablero[filaPrincipi - 1][columnaPrincipi + 1] == '-') {
+								legal = true;
+							}
 						}
 					}
-					if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == matrizTablero[filaFinal][columnaFinal]) {
-						if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '-') {
-							legal = true;
+					else if (filaPrincipi - 1 > 0 && columnaPrincipi - 1 > 0) {
+						if (filaPrincipi - 1 == filaFinal && columnaPrincipi - 1 == columnaFinal) {
+							if (matrizTablero[filaPrincipi - 1][columnaPrincipi - 1] == '-') {
+								legal = true;
+							}
 						}
 					}
 				}
