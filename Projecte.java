@@ -50,11 +50,11 @@ public class Projecte {
 
 		// Variables Inicials
 		char[][] matrizTablero =     {{'-','○','-','○','-','○','-','○'},
-				{'○','-','○','-','○','-','○','-'},
-				{'-','○','-','○','-','-','-','○'},
-				{'-','-','-','-','○','-','-','-'},
-				{'-','-','-','•','-','-','-','-'},
-				{'•','-','•','-','•','-','•','-'},
+				{'○','-','○','-','○','-','-','-'},
+				{'-','○','-','○','-','○','-','○'},
+				{'-','-','-','-','-','-','-','-'},
+				{'-','-','-','○','-','-','-','-'},
+				{'•','-','•','-','☻','-','•','-'},
 				{'-','•','-','•','-','•','-','•'},
 				{'•','-','•','-','•','-','•','-'}};
 
@@ -62,22 +62,27 @@ public class Projecte {
 		boolean jocActiu = true;
 		while (jocActiu) {
 			// Comença Torn Negres
-			int filaPrincipi = -1;
-			int columnaPrincipi = -1;
-			int filaFinal = -1;
-			int columnaFinal = -1;
-			int filaMatada;
-			int columnaMatada;
-			boolean colorFitxa = false;
-			boolean unAltreMata = true;
 			boolean tornNegres = true;
 			boolean tornBlanques = false;
-			// Imprimim Taula
 
 			// Demanem Posició que es vol moure (Fila + Columna)
 			System.out.println("---| Torn de les NEGRES |---");
 			while (tornNegres) {
+				int filaMatada;
+				int columnaMatada;
+				boolean colorFitxa = false;
+				boolean unAltreMata = true;
+				int filaPrincipi = -1;
+				int columnaPrincipi = -1;
+				int filaFinal = -1;
+				int columnaFinal = -1;
+
 				while (!colorFitxa || unAltreMata) {
+					filaPrincipi = -1;
+					columnaPrincipi = -1;
+					filaFinal = -1;
+					columnaFinal = -1;
+
 					mostrarTaulell(matrizTablero);
 
 					// Fila
@@ -95,7 +100,31 @@ public class Projecte {
 					// Comprobem que es del seu color
 
 					colorFitxa = comprobacioColorFitxa(1, filaPrincipi, columnaPrincipi, matrizTablero);
-					unAltreMata = saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
+
+
+					char[][] matriuMatar = new char[8][8];
+					boolean igual = true;
+
+					for (int i = 0; i < matriuMatar.length; i++) {
+						for (int j = 0; j < matriuMatar[i].length; j++) {
+							matriuMatar[i][j] = matrizTablero[i][j];
+						}
+					}
+					matriuMatar = potMatar(matriuMatar, filaPrincipi, columnaPrincipi, 1);
+					for (int i = 0; i < matriuMatar.length; i++) {
+						for (int j = 0; j < matriuMatar[i].length; j++) {
+							if(matrizTablero[i][j] != matriuMatar[i][j]) {
+								igual = false;
+							}
+						}
+					}
+
+					if (igual) {
+						unAltreMata = saberSiAltrePeçaMata(1, filaPrincipi, columnaPrincipi, matrizTablero);
+					}
+					else {
+						unAltreMata = false;
+					}
 
 					if (!colorFitxa) {
 						System.out.println("Aquesta fitxa no es teva");
@@ -103,26 +132,28 @@ public class Projecte {
 					else if (unAltreMata) {
 						System.out.println("Hi ha una altre peça que mata");
 					}
+					if (colorFitxa && !unAltreMata) {
 
-					boolean colocacioCorrecta = false;
-					// Demanem on la volem moure
-					while (filaFinal < 0 || filaFinal > 8) {
-						System.out.println("Fila on vols moure la fitxa:");
-						filaFinal = teclado.nextInt() - 1;
-					}
+						boolean colocacioCorrecta = false;
+						// Demanem on la volem moure
+						while (filaFinal < 0 || filaFinal > 8) {
+							System.out.println("Fila on vols moure la fitxa:");
+							filaFinal = teclado.nextInt() - 1;
+						}
 
-					while (columnaFinal < 0 || columnaFinal > 8) {
-						System.out.println("Columna on vols moure la fitxa:");
-						columnaFinal = teclado.nextInt() - 1;
-					}
+						while (columnaFinal < 0 || columnaFinal > 8) {
+							System.out.println("Columna on vols moure la fitxa:");
+							columnaFinal = teclado.nextInt() - 1;
+						}
 
-					// Comprobem que el moviment es correcte
-					colocacioCorrecta = colocacioCorrecta(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
+						// Comprobem que el moviment es correcte
+						colocacioCorrecta = colocacioCorrecta(false, 1, filaPrincipi, columnaPrincipi, filaFinal, columnaFinal, matrizTablero);
 
-					if (!colocacioCorrecta) {
-						System.out.println("La posicio sel·leccionada no es correcta");
-						colorFitxa = false;
-						unAltreMata = true;
+						if (!colocacioCorrecta) {
+							System.out.println("La posicio sel·leccionada no es correcta");
+							colorFitxa = false;
+							unAltreMata = true;
+						}
 					}
 				}
 				// Movem la fitxa
@@ -136,53 +167,88 @@ public class Projecte {
 
 				// Comprobem si mata
 
-				// Si fa la diagonal amb una BLANCA i te lloc a la casella seguent, la mata
+				// Comprobem si al moure la peça, ha matat
+				if ((filaFinal + 2 == filaPrincipi || filaFinal - 2 == filaPrincipi) && (columnaFinal + 2 == columnaPrincipi || columnaFinal - 2 == columnaPrincipi)) {
+					// Mentre alrededor tingui alguna peça que pot matar
+					boolean igual = true;
+					while (igual) {
+						char[][] matriuMatar = new char[8][8];
 
-				// Si mata, matar
+						for (int i = 0; i < matriuMatar.length; i++) {
+							for (int j = 0; j < matriuMatar[i].length; j++) {
+								matriuMatar[i][j] = matrizTablero[i][j];
+							}
+						}
+						matriuMatar = potMatar(matriuMatar, filaFinal, columnaFinal, 1);
+						for (int i = 0; i < matriuMatar.length; i++) {
+							for (int j = 0; j < matriuMatar[i].length; j++) {
+								if(matrizTablero[i][j] != matriuMatar[i][j]) {
+									igual = false;
+									if (matriuMatar[i][j] == '•' || matriuMatar[i][j] == '☻') {
+										filaFinal = matriuMatar[i][j];
+										columnaFinal = matriuMatar[i][j];
+									}
+								}
+							}
+						}
 
-				// Un cop moguda, comprobem si torna a matar
-
-
-				// Si pot matar, matar un altre cop
-
-
-
-				// Comença Torn Blanques
-
-
-				// Imprimim Taula
-
-
-				// Demanem Posició que es vol moure (Fila + Columna)
-
-
-				// Comprobem que es del seu color
-
-
-				// Demanem Posició on es vol moure (Fila + Columna)
-
-
-				// Comprobem que el moviment es legal
-
-
-				// Comprobem que no esta ocupat
-
-
-				// Comprobem si hi ha una altre peça que mata
-
-
-				// Movem la fitxa
-
-
-				// Comprobem si mata
-				// Si mata, matar
-
-				// Un cop moguda, comprobem si torna a matar
-
-
-				// Si pot matar, matar un altre cop
-				tornNegres = false;
+						if (!igual) {
+							System.out.println("Pots Tornar a matar");
+							
+						}
+						else {
+							igual = false;
+							tornNegres = false;
+						}
+					}
+				}
 			}
+
+			// Si fa la diagonal amb una BLANCA i te lloc a la casella seguent, la mata
+
+			// Si mata, matar
+
+			// Un cop moguda, comprobem si torna a matar
+
+
+			// Si pot matar, matar un altre cop
+
+
+
+			// Comença Torn Blanques
+
+
+			// Imprimim Taula
+
+
+			// Demanem Posició que es vol moure (Fila + Columna)
+
+
+			// Comprobem que es del seu color
+
+
+			// Demanem Posició on es vol moure (Fila + Columna)
+
+
+			// Comprobem que el moviment es legal
+
+
+			// Comprobem que no esta ocupat
+
+
+			// Comprobem si hi ha una altre peça que mata
+
+
+			// Movem la fitxa
+
+
+			// Comprobem si mata
+			// Si mata, matar
+
+			// Un cop moguda, comprobem si torna a matar
+
+
+			// Si pot matar, matar un altre cop
 		}
 	}
 	public static void veureRecords() {
@@ -521,4 +587,173 @@ public class Projecte {
 		}
 		return false;
 	}
+	public static char[][] potMatar (char[][] matrizTablero, int filaFinal, int columnaFinal, int color) {
+		boolean potMatar = true;
+		if (color == 1) {
+			while (potMatar) {
+				// Comprobem la direcció i que está dintre de la matriu
+				if (filaFinal - 2 > 0 && columnaFinal - 2 > 0) {
+					if (matrizTablero[filaFinal - 1][columnaFinal - 1] == '○' || matrizTablero[filaFinal - 1][columnaFinal - 1] == '☺') {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal - 2][columnaFinal - 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☻') {
+								moviment(true, 1, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 1, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				if (filaFinal + 2 < 8 && columnaFinal - 2 > 0) {
+					if (matrizTablero[filaFinal + 1][columnaFinal - 1] == '○' || matrizTablero[filaFinal + 1][columnaFinal - 1] == '☺') {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal + 2][columnaFinal - 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☻') {
+								moviment(true, 1, filaFinal, columnaFinal, filaFinal + 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 1, filaFinal, columnaFinal, filaFinal + 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				if (filaFinal - 2 > 0 && columnaFinal + 2 < 8) {
+					if (matrizTablero[filaFinal - 1][columnaFinal + 1] == '○' || matrizTablero[filaFinal - 1][columnaFinal + 1] == '☺' ) {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal - 2][columnaFinal + 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☻') {
+								moviment(true, 1, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 1, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				if (filaFinal + 2 > 8 && columnaFinal + 2 > 8) {
+					if (matrizTablero[filaFinal + 1][columnaFinal + 1] == '○' || matrizTablero[filaFinal + 1][columnaFinal + 1] == '☺') {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal + 2][columnaFinal + 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☻') {
+								moviment(true, 1, filaFinal, columnaFinal, filaFinal + 2, columnaFinal + 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 1, filaFinal, columnaFinal, filaFinal + 2, columnaFinal + 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				else {
+					potMatar = false;
+				}
+			}
+			return matrizTablero;
+		}
+		else if (color == 2) {
+			while (potMatar) {
+
+				// Comprobem la direcció i si esta dintre la matriu
+				if (filaFinal - 2 > 0 && columnaFinal - 2 > 0) {
+					if (matrizTablero[filaFinal - 1][columnaFinal - 1] == '•' || matrizTablero[filaFinal - 1][columnaFinal - 1] == '☻') {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal - 2][columnaFinal - 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☺') {
+								moviment(true, 2, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 2, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				if (filaFinal + 2 < 8 && columnaFinal - 2 > 0) {
+					if (matrizTablero[filaFinal + 1][columnaFinal - 1] == '•' || matrizTablero[filaFinal + 1][columnaFinal - 1] == '☻') {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal + 2][columnaFinal - 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☺') {
+								moviment(true, 2, filaFinal, columnaFinal, filaFinal + 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 2, filaFinal, columnaFinal, filaFinal + 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				if (filaFinal - 2 > 0 && columnaFinal + 2 < 8) {
+					if (matrizTablero[filaFinal - 1][columnaFinal + 1] == '•' || matrizTablero[filaFinal - 1][columnaFinal + 1] == '☻' ) {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal - 2][columnaFinal + 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☺') {
+								moviment(true, 2, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 2, filaFinal, columnaFinal, filaFinal - 2, columnaFinal - 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				if (filaFinal + 2 < 8 && columnaFinal + 2 < 8) {
+					if (matrizTablero[filaFinal + 1][columnaFinal + 1] == '•' || matrizTablero[filaFinal + 1][columnaFinal + 1] == '☻') {
+						// Comprobem si el seguent está lliure
+						if (matrizTablero[filaFinal + 2][columnaFinal + 2] == '-') {
+							if (matrizTablero[filaFinal][columnaFinal] == '☺') {
+								moviment(true, 2, filaFinal, columnaFinal, filaFinal + 2, columnaFinal + 2, matrizTablero);
+								potMatar = false;
+							}
+							else {
+								moviment(false, 2, filaFinal, columnaFinal, filaFinal + 2, columnaFinal + 2, matrizTablero);
+								potMatar = false;
+							}
+						}
+					}
+					else {
+						potMatar = false;
+					}
+				}
+				else {
+					potMatar = false;
+				}
+			}
+			return matrizTablero;
+		}
+		System.out.println("No deberias ver esto");
+		return matrizTablero;
+	}
+
 }
